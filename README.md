@@ -8,3 +8,10 @@ This is the home for colloboration on the XBOX 360 Controlled MK2 version of Joe
 3. Drive Calibration not supported
 4. Remove dependency of using an Arduino Uno
 5. Map specific sounds to buttons
+
+## Hardware Needed
+1. Arduino Uno
+2. USB Host Shield 2.0
+3. XBOX 360 PC Reciever
+
+## Wiring Diagram
