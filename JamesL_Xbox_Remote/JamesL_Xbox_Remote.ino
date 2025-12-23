@@ -197,10 +197,10 @@ void loop() {
   }
   
   // Check if Right Stick Y is Out of the Dead Zone
-  if (buttonR == 0 && JoyRightY > 7500 || JoyRightY < -7500){
+  if (buttonR == 0 && (JoyRightY > 7500 || JoyRightY < -7500)){
     sendToBody.ch1 = constrain(map(JoyRightY, -32000, 32000, 0, 512), 0, 512);
-  } else if (buttonR == 1 && JoyRightY > 7500 || JoyRightY < -7500) {
-    sendToBody.ch1 = constrain(map(JoyRightY, -32000, 32000, 512, 0), 512, 0);
+  } else if (buttonR == 1 && (JoyRightY > 7500 || JoyRightY < -7500)) {
+    sendToBody.ch1 = constrain(map(JoyRightY, -32000, 32000, 512, 0), 0, 512);
   } else {
     sendToBody.ch1 = 256;  // Stick is Centered
   }
@@ -296,12 +296,11 @@ void loop() {
 //    }
 //  }
 
-    // R3 Hat Right Stick to Change Direction
+    // R3 Hat Right Stick to Change Direction (toggle on click)
   if (Xbox.getButtonClick(R3, 0)){
-    buttonR = 1;
-    } else {
-      buttonR = 0;
-    }
+    buttonR = !buttonR;  // Toggle between 0 and 1
+    sendToBody.fwdState = buttonR;  // Sync state to body controller
+  }
   
   //-------------------------------------------
   // Send data to the Body via the Serial Port

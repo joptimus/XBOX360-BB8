@@ -435,7 +435,7 @@ void sounds(){
   
   //This is the code for playing Random Sound when B Button is Pressed
   if(playSound == 1){
-    randSoundPin = random(0, 5);
+    randSoundPin = random(0, 4);  // Array has 4 elements (index 0-3)
     digitalWrite((soundPins[randSoundPin]), LOW);
     soundMillis = millis();
     playSound = 2;
@@ -771,17 +771,17 @@ void domeCalib(){
   #endif        
     if(ch5PWM > -1 && ch5PWM < 35){
        ch5PWM = 0;
-    } 
+    }
     else if(ch5PWM < 0 && ch5PWM > -35){
             ch5PWM = 0;
-    } 
-    else if(ch5PWM > 35){
-            map(ch5PWM, 35, 255, 0, 255);
-    } 
-    else if(ch5PWM < -35){
-            map(ch5PWM, -35, -255, 0, -255);
     }
-    constrain(ch5PWM, -255, 255);
+    else if(ch5PWM > 35){
+            ch5PWM = map(ch5PWM, 35, 255, 0, 255);
+    }
+    else if(ch5PWM < -35){
+            ch5PWM = map(ch5PWM, -35, -255, 0, -255);
+    }
+    ch5PWM = constrain(ch5PWM, -255, 255);
           
     if((ch5PWM < -240 && ((flywheelRotation > -30 && flywheelRotation < 30) || flywheelRotation > 240)) || ((ch5PWM > 240) && ((flywheelRotation > -30 && flywheelRotation < 30) || flywheelRotation < -240)))  {
     if(ch5PWM > 240){
@@ -805,7 +805,7 @@ void domeCalib(){
               flywheelRotation-=flywheelEase;     
      }        
       
-     constrain(flywheelRotation, -255, 255);
+     flywheelRotation = constrain(flywheelRotation, -255, 255);
     if ((flywheelRotation < -10) && (BTstate == 1) && (recFromRemote.motorEnable == 0)){
          analogWrite(flywheelSpinPWM1, 0);
          analogWrite(flywheelSpinPWM2, abs(flywheelRotation));
@@ -886,8 +886,8 @@ void domeSpinServo() {
          else if ((ch4Servo < Setpoint5) && (ch4Servo != Setpoint5)){
           Setpoint5-=5;
          }
-    constrain(Setpoint5, -70, 70);
-    
+    Setpoint5 = constrain(Setpoint5, -70, 70);
+
     PID5.Compute();
     if (Output5 < -4) {
             Output5a = constrain(abs(Output5),0, 255);
